@@ -18,12 +18,18 @@ start() {
         this.intervalId = setInterval(() => {
             const currentTime = Date.now();
             const deltaTime = this.targetDate - currentTime;
-            if (deltaTime < 0){
-                return  this.updateTimer(this.getTime(0));
+            if (deltaTime <= 0){
+                return  this.stop();
             }
             this.updateTimer(this.getTime(deltaTime));
         }, 1000);
     }
+
+stop(){
+  clearInterval(this.intervalId);
+  this.updateTimer(this.getTime(0));
+}
+
     updateTimer({ days, hours, mins, secs }) {
     this.selector.querySelector('[data-value="days"]').textContent = days;
     this.selector.querySelector('[data-value="hours"]').textContent = hours;
@@ -44,5 +50,5 @@ start() {
     return String(value).padStart(2, '0');
   }
 }
-const newTimer = new CountdownTimer({selector: '#timer-1', targetDate: new Date('Jan 01, 2022')});
+const newTimer = new CountdownTimer({selector: '#timer-1', targetDate: new Date('Feb 05, 2021')});
 newTimer.start.call(newTimer);
